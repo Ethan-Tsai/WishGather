@@ -1,52 +1,65 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import TabBar from "../components/TabBar";
-import { StyleSheet, Pressable, Text, View } from "react-native";
+import { StyleSheet, Pressable, Text, SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Padding, FontFamily, Color, Border } from "../GlobalStyles";
+import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 
 const UserPage22 = () => {
   const navigation = useNavigation();
 
+  const onSwipe = (event) => {
+    const { translationX } = event.nativeEvent;
+    if (translationX > 50) {
+      navigation.navigate("UserPage21");
+    }
+  };
+
   return (
-    <View style={styles.userPage22}>
-      <Pressable
-        style={styles.goBackButton}
-        onPress={() => navigation.navigate("UserPage")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/go-back-button.png")}
-        />
-      </Pressable>
-      <View style={styles.tabBar}>
-        <Pressable
-          style={styles.tabFlexBox}
-          onPress={() => navigation.navigate("UserPage21")}
-        >
-          <Text style={[styles.page1, styles.pageTypo]}>宮廟</Text>
-        </Pressable>
-        <View style={[styles.tabState1, styles.tabFlexBox]}>
-          <Text style={[styles.page11, styles.pageTypo]}>商家</Text>
-          <View style={styles.tabStateChild} />
-        </View>
-      </View>
-      <View style={styles.tablermoodEmptyParent}>
-        <Image
-          style={styles.tablermoodEmptyIcon}
-          contentFit="cover"
-          source={require("../assets/tablermoodempty.png")}
-        />
-        <Text style={[styles.text, styles.textTypo]}>暫無收藏商家</Text>
-      </View>
-      <Image
-        style={styles.userPage22Child}
-        contentFit="cover"
-        source={require("../assets/line-2.png")}
-      />
-      <Text style={[styles.text1, styles.textTypo]}>收藏清單</Text>
-    </View>
+    <GestureHandlerRootView style={styles.userPage22}>
+      <PanGestureHandler onGestureEvent={onSwipe}>
+        <SafeAreaView style={styles.userPage22}>
+          <View style={styles.header}>
+            <Pressable
+              style={styles.goBackButton}
+              onPress={() => navigation.navigate("UserPage")}
+            >
+              <Image
+                style={styles.icon}
+                contentFit="cover"
+                source={require("../assets/go-back-button@3x.png")}
+              />
+            </Pressable>
+            <Text style={styles.text1}>收藏清單</Text>
+          </View>
+          <View style={styles.tabBar}>
+            <Pressable
+              style={styles.tabFlexBox}
+              onPress={() => navigation.navigate("UserPage21")}
+            >
+              <Text style={[styles.page1, styles.pageTypo]}>宮廟</Text>
+            </Pressable>
+            <View style={[styles.tabState1, styles.tabFlexBox]}>
+              <Text style={[styles.page11, styles.pageTypo]}>商家</Text>
+              <View style={styles.tabStateChild} />
+            </View>
+          </View>
+          <View style={styles.tablermoodEmptyParent}>
+            <Image
+              style={styles.tablermoodEmptyIcon}
+              contentFit="cover"
+              source={require("../assets/tablermoodempty@3x.png")}
+            />
+            <Text style={[styles.text, styles.textTypo]}>暫無收藏商家</Text>
+          </View>
+          <Image
+            style={styles.userPage22Child}
+            contentFit="cover"
+            source={require("../assets/line-2@3x.png")}
+          />
+        </SafeAreaView>
+      </PanGestureHandler>
+    </GestureHandlerRootView>
   );
 };
 
@@ -73,11 +86,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   goBackButton: {
-    left: '5%',
-    top: '5%',
     width: 40,
     height: 40,
-    position: "absolute",
   },
   page1: {
     color: Color.colorGray_400,
@@ -149,19 +159,22 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   text1: {
-    top: '7%',
-    left: '38%',
-    fontSize: 30,
+    fontSize: FontSize.size_11xl,
     color: Color.colorBlack,
     textAlign: "center",
-    width: 120,
-    height: 77,
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: 20,
   },
   userPage22: {
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_100,
     flex: 1,
-    height: 932,
     overflow: "hidden",
     width: "100%",
   },

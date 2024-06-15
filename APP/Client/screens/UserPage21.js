@@ -1,80 +1,122 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, Pressable, Text, View } from "react-native";
+import { StyleSheet, Pressable, Text, SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import TabBar from "../components/TabBar";
 import Component from "../components/Component1";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 
 const UserPage21 = () => {
   const navigation = useNavigation();
 
+  const onSwipe = (event) => {
+    const { translationX } = event.nativeEvent;
+    if (translationX < -50) {
+      navigation.navigate("UserPage22");
+    }
+  };
+
   return (
-    <View style={styles.userPage21}>
-      <Pressable
-        style={styles.goBackButton}
-        onPress={() => navigation.navigate("UserPage")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/go-back-button.png")}
-        />
-      </Pressable>
-      <TabBar onTabStatePress={() => navigation.navigate("UserPage22")} />
-      <Image
-        style={styles.userPage21Child}
-        contentFit="cover"
-        source={require("../assets/line-4.png")}
-      />
-      <Text style={styles.text}>收藏清單</Text>
-      
-      {/* 連接資料庫後，顯示收藏宮廟的component增加處 */}
-      <Component
-        rectangle21={require("../assets/rectangle-213.png")}
-        prop={`大甲 鎮瀾宮媽祖廟
+    <GestureHandlerRootView style={styles.userPage21}>
+      <PanGestureHandler onGestureEvent={onSwipe}>
+        <SafeAreaView style={styles.userPage21}>
+          <View style={styles.header}>
+            <Pressable
+              style={styles.goBackButton}
+              onPress={() => navigation.navigate("UserPage")}
+            >
+              <Image
+                style={styles.icon}
+                contentFit="cover"
+                source={require("../assets/go-back-button.png")}
+              />
+            </Pressable>
+            <Text style={styles.text}>收藏清單</Text>
+          </View>
+          <View style={styles.tabBar}>
+            <Pressable
+              style={styles.tabFlexBox}
+              onPress={() => navigation.navigate("UserPage21")}
+            >
+              <Text style={[styles.page11, styles.pageTypo]}>宮廟</Text>
+              <View style={styles.tabStateChild} />
+            </Pressable>
+            <View style={[styles.tabState1, styles.tabFlexBox]}>
+              <Text style={[styles.page1, styles.pageTypo]}>商家</Text>
+            </View>
+          </View>
+          <Image
+            style={styles.userPage21Child}
+            contentFit="cover"
+            source={require("../assets/line-4.png")}
+          />
+          <Component
+            rectangle21={require("../assets/rectangle-213.png")}
+            prop={`大甲 鎮瀾宮媽祖廟
 `}
-        prop1="222公里"
-        savedStateIcon
-        propTop={200}
-        propLeft={20}
-        onPressablePress={() => navigation.navigate("OfferingPage5")}
-      />
-    </View>
+            prop1="222公里"
+            savedStateIcon
+            propTop={200}
+            propLeft={20}
+            onPressablePress={() => navigation.navigate("OfferingPage5")}
+          />
+        </SafeAreaView>
+      </PanGestureHandler>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
+  pageTypo: {
+    textAlign: "center",
+    fontSize: FontSize.size_6xl,
+  },
+  tabFlexBox: {
+    alignItems: "center",
+    height: 58,
+    width: 82,
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  textTypo: {
+    display: "flex",
+    fontFamily: FontFamily.interRegular,
+    alignItems: "center",
+    position: "absolute",
+  },
   icon: {
     height: "100%",
     width: "100%",
   },
   goBackButton: {
-    left: '5%',
-    top: '5%',
     width: 40,
     height: 40,
-    position: "absolute",
   },
-  userPage21Child: {
-    top: 191,
-    left: 10,
-    width: 400,
-    height: 1,
-    position: "absolute",
-  },
-  text: {
-    top: '7%',
-    left: '38%',
-    fontSize: FontSize.size_11xl,
+  page1: {
+    color: Color.colorGray_400,
+    textAlign: "center",
+    fontSize: FontSize.size_6xl,
     fontFamily: FontFamily.interRegular,
-    color: Color.colorBlack,
-    textAlign: "left",
-    display: "flex",
-    alignItems: "center",
-    width: 120,
-    height: 77,
+  },
+  page11: {
+    color: Color.colorOrange,
+    zIndex: 0,
+    fontFamily: FontFamily.interRegular,
+    textAlign: "center",
+    fontSize: FontSize.size_6xl,
+  },
+  tabStateChild: {
+    marginLeft: -41,
+    top: 45,
+    backgroundColor: Color.colorOrange,
+    width: 81,
+    height: 5,
+    zIndex: 1,
+    left: "50%",
     position: "absolute",
+  },
+  tabState1: {
+    marginLeft: 50,
   },
   tabBar: {
     marginLeft: -130,
@@ -86,11 +128,31 @@ const styles = StyleSheet.create({
     left: "50%",
     position: "absolute",
   },
+  userPage21Child: {
+    top: '20%',
+    left: 0,
+    width: '100%',
+    height: 1,
+    position: "absolute",
+  },
+  text: {
+    fontSize: FontSize.size_11xl,
+    fontFamily: FontFamily.interRegular,
+    color: Color.colorBlack,
+    textAlign: "center",
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
   userPage21: {
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_100,
     flex: 1,
-    height: 932,
     overflow: "hidden",
     width: "100%",
   },
