@@ -1,51 +1,65 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, Pressable, Text, View } from "react-native";
+import { StyleSheet, Pressable, Text, SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Padding, FontFamily, Color, Border } from "../GlobalStyles";
+import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 
 const UserPage31 = () => {
   const navigation = useNavigation();
 
+  const onSwipe = (event) => {
+    const { translationX } = event.nativeEvent;
+    if (translationX > 50) {
+      navigation.navigate("UserPage3");
+    }
+  };
+
   return (
-    <View style={styles.userPage32}>
-      <Pressable
-        style={styles.goBackButton}
-        onPress={() => navigation.navigate("UserPage")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/go-back-button.png")}
-        />
-      </Pressable>
-      <View style={styles.tabBar}>
-        <Pressable
-          style={styles.tabFlexBox}
-          onPress={() => navigation.navigate("UserPage3")}
-        >
-          <Text style={[styles.page1, styles.pageTypo]}>宮廟</Text>
-        </Pressable>
-        <View style={[styles.tabState1, styles.tabFlexBox]}>
-          <Text style={[styles.page11, styles.pageTypo]}>商家</Text>
-          <View style={styles.tabStateChild} />
-        </View>
-      </View>
-      <View style={styles.tablermoodEmptyParent}>
-        <Image
-          style={styles.tablermoodEmptyIcon}
-          contentFit="cover"
-          source={require("../assets/tablermoodempty.png")}
-        />
-        <Text style={[styles.text, styles.textTypo]}>暫無購買紀錄</Text>
-      </View>
-      <Image
-        style={styles.userPage32Child}
-        contentFit="cover"
-        source={require("../assets/line-2.png")}
-      />
-      <Text style={[styles.text1, styles.textTypo]}>歷史訂單</Text>
-    </View>
+    <GestureHandlerRootView style={styles.userPage31}>
+      <PanGestureHandler onGestureEvent={onSwipe}>
+        <SafeAreaView style={styles.userPage31}>
+          <View style={styles.header}>
+            <Pressable
+              style={styles.goBackButton}
+              onPress={() => navigation.navigate("UserPage")}
+            >
+              <Image
+                style={styles.icon}
+                contentFit="cover"
+                source={require("../assets/go-back-button.png")}
+              />
+            </Pressable>
+            <Text style={styles.text1}>歷史訂單</Text>
+          </View>
+          <View style={styles.tabBar}>
+            <Pressable
+              style={styles.tabFlexBox}
+              onPress={() => navigation.navigate("UserPage3")}
+            >
+              <Text style={[styles.page1, styles.pageTypo]}>宮廟</Text>
+            </Pressable>
+            <View style={[styles.tabState1, styles.tabFlexBox]}>
+              <Text style={[styles.page11, styles.pageTypo]}>商家</Text>
+              <View style={styles.tabStateChild} />
+            </View>
+          </View>
+          <View style={styles.tablermoodEmptyParent}>
+            <Image
+              style={styles.tablermoodEmptyIcon}
+              contentFit="cover"
+              source={require("../assets/tablermoodempty.png")}
+            />
+            <Text style={[styles.text, styles.textTypo]}>暫無購買紀錄</Text>
+          </View>
+          <Image
+            style={styles.userPage31Child}
+            contentFit="cover"
+            source={require("../assets/line-2.png")}
+          />
+        </SafeAreaView>
+      </PanGestureHandler>
+    </GestureHandlerRootView>
   );
 };
 
@@ -72,11 +86,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   goBackButton: {
-    left: '5%',
-    top: '5%',
     width: 40,
     height: 40,
-    position: "absolute",
   },
   page1: {
     color: Color.colorGray_400,
@@ -134,13 +145,13 @@ const styles = StyleSheet.create({
     left: "50%",
   },
   tablermoodEmptyParent: {
-    top: 366,
-    left: 115,
-    height: 141,
+    top: '40%',
+    left: '28%',
+    height: 150,
     width: 200,
     position: "absolute",
   },
-  userPage32Child: {
+  userPage31Child: {
     top: '20%',
     left: 0,
     width: '100%',
@@ -148,19 +159,22 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   text1: {
-    top: '7%',
-    left: '38%',
-    fontSize: 30,
+    fontSize: FontSize.size_11xl,
     color: Color.colorBlack,
     textAlign: "center",
-    width: 120,
-    height: 77,
+    flex: 1,
   },
-  userPage32: {
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  userPage31: {
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_100,
     flex: 1,
-    height: 932,
     overflow: "hidden",
     width: "100%",
   },
