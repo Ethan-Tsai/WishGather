@@ -1,23 +1,61 @@
 import React, { useState, useCallback } from "react";
 import { Image } from "expo-image";
-import { StyleSheet, Pressable, View, Text, Modal, ScrollView,KeyboardAvoidingView,Platform, TextInput } from "react-native";
+import { StyleSheet, Pressable, View, Text, ScrollView, KeyboardAvoidingView, Platform, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
 import { Border, Color, Padding, FontSize, FontFamily } from "../GlobalStyles";
-import ProductItem from "../components/PouductItem";
+import ProductItem from "../components/ProductItem";
 
 const OfferingPage4 = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
 
+  const handleSearch = useCallback((query) => {
+    setSearchQuery(query);
+  }, []);
+
+  const products = [
+    { id: 1, title: '線上點燈', imageSource: require("../assets/rectangle-19@3x.png") },
+    { id: 2, title: '金紙香品', imageSource: require("../assets/rectangle-191@3x.png") },
+    { id: 3, title: '生鮮蔬果', imageSource: require("../assets/rectangle-192@3x.png") },
+    { id: 4, title: '精緻糕點', imageSource: require("../assets/rectangle-193@3x.png") },
+    { id: 5, title: '餅乾糖果', imageSource: require("../assets/rectangle-194@3x.png") },
+    { id: 6, title: '解渴飲品', imageSource: require("../assets/rectangle-195@3x.png") },
+    { id: 7, title: '文創周邊', imageSource: require("../assets/rectangle-196@3x.png") },
+  ];
+
+  const filteredProducts = products.filter(product =>
+    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-
-      <View style={styles.offeringPage1}>
-
-        {/*footer*/}
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={100}>
+      <View style={styles.offeringPage}>
+        
+        {/* Search Bar */}
+        <View style={styles.searchBar}>
+          
+          <TextInput
+            style={styles.input}
+            placeholder="搜索"
+            value={searchQuery}
+            onChangeText={handleSearch}
+          />
+        </View>
+        
+        {/* Product Items */}
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <View style={[styles.parent, styles.parentFlexBox]}>
+            {filteredProducts.map(product => (
+              <ProductItem
+                key={product.id}
+                onPress={() => navigation.navigate("OfferingPage6")}
+                imageSource={product.imageSource}
+                title={product.title}
+              />
+            ))}
+          </View>
+        </ScrollView>
+        {/* Footer */}
         <View style={[styles.footer, styles.menuLayout]}>
           <View style={[styles.menu, styles.menuLayout]}>
             <View style={[styles.homeIconParent, styles.parentFlexBox]}>
@@ -28,26 +66,29 @@ const OfferingPage4 = () => {
                 <Image
                   style={styles.icon}
                   contentFit="cover"
-                  source={require("../assets/home-icon1.png")}
+                  source={require("../assets/home-icon1@3x.png")}
                 />
               </Pressable>
-              <Image
-                style={[styles.templeIcon, styles.iconLayout]}
-                contentFit="cover"
-                source={require("../assets/temple-icon1.png")}
-              />
               <Pressable
                 style={[styles.templeIcon, styles.iconLayout]}
-                onPress={() => navigation.navigate("CartPage")}
+                onPress={() => navigation.navigate("OfferingPage4")}
               >
                 <Image
                   style={styles.icon}
                   contentFit="cover"
-                  source={require("../assets/shopping-bag-icon.png")}
+                  source={require("../assets/temple-icon1@3x.png")}
                 />
               </Pressable>
-
-
+              <Pressable
+                  style={[styles.templeIcon, styles.iconLayout]}
+                  onPress={() => navigation.navigate("CartPage")}
+                >
+                  <Image
+                    style={styles.icon}
+                    contentFit="cover"
+                    source={require("../assets/shopping-bag-icon@3x.png")}
+                  />
+              </Pressable>
               <Pressable
                 style={[styles.templeIcon, styles.iconLayout]}
                 onPress={() => navigation.navigate("UserPage")}
@@ -55,95 +96,38 @@ const OfferingPage4 = () => {
                 <Image
                   style={styles.icon}
                   contentFit="cover"
-                  source={require("../assets/user-icon.png")}
+                  source={require("../assets/user-icon@3x.png")}
                 />
               </Pressable>
             </View>
           </View>
         </View>
-        
-        {/* <Image
-          style={[styles.offeringPage1Child, styles.childLayout]}
+        <Image
+          style={[styles.offeringPage2Child, styles.itemLayout]}
           contentFit="cover"
-          source={require("../assets/ellipse-3.png")}
-        /> */}
-
-      
-        <View style={styles.searchBar}>
-              <Image
-                style={[styles.searchIcon]}
-                source={require("../assets/search-icon.png")}
-              />
-              <TextInput
-                style={[styles.input, styles.textFlexBox]}
-                placeholder="搜索"
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-              />
-        </View>
-      
-
-        {/*此處先以自帶資料顯示，帶連接資料庫後再更動，目前點擊該項目product後會先統一至offeringpage6*/}
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <View style={[styles.parent, styles.parentFlexBox]}>
-            <ProductItem
-              onPress={() => navigation.navigate("OfferingPage6")}
-              imageSource={require("../assets/rectangle-19.png")}
-              title="線上點燈"
-            />
-            <ProductItem
-              onPress={() => navigation.navigate("OfferingPage6")}
-              imageSource={require("../assets/rectangle-191.png")}
-              title="金紙香品"
-            />
-            <ProductItem
-              onPress={() => navigation.navigate("OfferingPage6")}
-              imageSource={require("../assets/rectangle-192.png")}
-              title="生鮮蔬果"
-              backgroundColor="#fff"
-              fontFamily="Roboto-Regular"
-            />
-            <ProductItem
-              onPress={() => navigation.navigate("OfferingPage6")}
-              imageSource={require("../assets/rectangle-193.png")}
-              title="精緻糕點"
-            />
-            <ProductItem
-              onPress={() => navigation.navigate("OfferingPage6")}
-              imageSource={require("../assets/rectangle-194.png")}
-              title="餅乾糖果"
-            />
-            <ProductItem
-              onPress={() => navigation.navigate("OfferingPage6")}
-              imageSource={require("../assets/rectangle-195.png")}
-              title="解渴飲品"
-            />
-            <ProductItem
-              onPress={() => navigation.navigate("OfferingPage6")}
-              imageSource={require("../assets/rectangle-196.png")}
-              title="文創周邊"
-              fontFamily="Inter-Regular"
-            />
-          </View>
-        </ScrollView>
+          source={require("../assets/ellipse-3@3x.png")}
+        />
       </View>
+      
     </KeyboardAvoidingView>
-
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   menuLayout: {
     height: 66,
     position: "absolute",
   },
-  parentFlexBox: { 
+  parentFlexBox: {
     flexDirection: "row",
     flexWrap: "wrap",
     position: "absolute",
-   
   },
-  scrollViewContent: { 
+  scrollViewContent: {
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -152,21 +136,19 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
-  childPosition: {
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    position: "absolute",
-    width: "100%",
-  },
   textFlexBox: {
-    alignItems: "center",
-    display: "flex",
+    textAlign: "left",
     position: "absolute",
   },
   icon: {
     height: "100%",
     width: "100%",
+  },
+  itemLayout: {
+    maxHeight: "100%",
+    maxWidth: "100%",
+    position: "absolute",
+    overflow: "hidden",
   },
   templeIcon: {
     marginLeft: 41,
@@ -180,12 +162,20 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorWhitesmoke_100,
     paddingHorizontal: Padding.p_17xl,
     paddingVertical: Padding.p_smi,
-    overflow: "hidden",
+    // overflow: "hidden",
   },
   menu: {
     top: 0,
     left: 0,
     width: 355,
+  },
+  offeringPage2Child: {
+    height: "1.07%",
+    width: "2.33%",
+    top: "94.85%",
+    right: "58.14%",
+    bottom: "4.08%",
+    left: "39.53%",
   },
   footer: {
     top: 831,
@@ -200,54 +190,34 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     width: 383,
   },
-  offeringPage1Child: {
-    height: "1.07%",
-    width: "2.33%",
-    top: "94.85%",
-    right: "58.14%",
-    bottom: "4.08%",
-    left: "39.53%",
-    position: "absolute",
-  },
-  container: {
-    flex:1,
-    backgroundColor: '#fff',
-  },
-
   searchIcon: {
     height: 30,
     width: 30,
   },
-
   searchBar: {
-    display:'flex',
+    display: 'flex',
     flexDirection: 'row',
-    width:'auto',
-    top:'15%',
-    left:'5%',
-    alignItems:'center',
+    width: '90%',
+    top: '15%',
+    left: '5%',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-
   input: {
-    height: 50,
-    width:'80%',
-    flex: 1,
+    height: 40,
+    width: '85%',
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 15,
-  },
-  
-  pressable: {
-    width: 160,
-    height: 160,
+    borderRadius: 5,
+    paddingLeft: 10,
   },
   parent: {
     left: 40,
     width: 'auto',
     flexWrap: "wrap",
-    overflow:'hidden',
+    overflow: 'hidden',
   },
-  offeringPage1: {
+  offeringPage: {
     borderRadius: Border.br_21xl,
     flex: 1,
     overflow: "hidden",
