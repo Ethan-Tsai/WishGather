@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, Pressable, View, Text } from "react-native";
+import { StyleSheet, Pressable, View, Text, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontSize, FontFamily, Padding } from "../GlobalStyles";
+// import { ScrollView } from "react-native-gesture-handler";
 
 const OfferingPage6 = () => {
   const navigation = useNavigation();
@@ -19,7 +20,10 @@ const OfferingPage6 = () => {
           source={require("../assets/go-back-button.png")}
         />
       </Pressable>
+      <View style={styles.scrollViewWrapper}>
+      <ScrollView contentContainerStyle={styles.scrollView} flex={1}>
       <View style={styles.offeringPage2Inner}>
+        
         <View style={[styles.parent, styles.menuPosition]}>
           <Pressable
             style={styles.view4Layout}
@@ -169,7 +173,9 @@ const OfferingPage6 = () => {
             />
           </View>
         </View>
-      </View>
+        </View>
+        </ScrollView>
+        </View>
       <View style={[styles.footer, styles.menuLayout]}>
         <View style={[styles.menu, styles.menuLayout]}>
           <View style={styles.homeIconParent}>
@@ -193,11 +199,16 @@ const OfferingPage6 = () => {
                 source={require("../assets/temple-icon1.png")}
               />
             </Pressable>
-            <Image
+            <Pressable
               style={[styles.templeIcon, styles.iconLayout]}
-              contentFit="cover"
-              source={require("../assets/shopping-bag-icon.png")}
+              onPress={() => navigation.navigate("CartPage")}
+            >
+              <Image
+                style={styles.icon}
+                contentFit="cover"
+                source={require("../assets/shopping-bag-icon.png")}
             />
+            </Pressable>
             <Pressable
               style={[styles.templeIcon, styles.iconLayout]}
               onPress={() => navigation.navigate("UserPage")}
@@ -222,6 +233,15 @@ const OfferingPage6 = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollViewWrapper: {
+    flex: 1,
+    marginTop: 50, 
+    marginBottom: 66, 
+  },
+  scrollView: {
+    paddingBottom: 140, 
+  },
+
   iconLayout: {
     height: 40,
     width: 40,

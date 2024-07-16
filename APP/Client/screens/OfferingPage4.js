@@ -14,13 +14,13 @@ const OfferingPage4 = () => {
   }, []);
 
   const products = [
-    { id: 1, title: '線上點燈', imageSource: require("../assets/rectangle-19@3x.png") },
-    { id: 2, title: '金紙香品', imageSource: require("../assets/rectangle-191@3x.png") },
-    { id: 3, title: '生鮮蔬果', imageSource: require("../assets/rectangle-192@3x.png") },
-    { id: 4, title: '精緻糕點', imageSource: require("../assets/rectangle-193@3x.png") },
-    { id: 5, title: '餅乾糖果', imageSource: require("../assets/rectangle-194@3x.png") },
-    { id: 6, title: '解渴飲品', imageSource: require("../assets/rectangle-195@3x.png") },
-    { id: 7, title: '文創周邊', imageSource: require("../assets/rectangle-196@3x.png") },
+    { id: 1, title: '線上點燈', imageSource: require("../assets/rectangle-19.png") },
+    { id: 2, title: '金紙香品', imageSource: require("../assets/rectangle-191.png") },
+    { id: 3, title: '生鮮蔬果', imageSource: require("../assets/rectangle-192.png") },
+    { id: 4, title: '精緻糕點', imageSource: require("../assets/rectangle-193.png") },
+    { id: 5, title: '餅乾糖果', imageSource: require("../assets/rectangle-194.png") },
+    { id: 6, title: '解渴飲品', imageSource: require("../assets/rectangle-195.png") },
+    { id: 7, title: '文創周邊', imageSource: require("../assets/rectangle-196.png") },
   ];
 
   const filteredProducts = products.filter(product =>
@@ -66,7 +66,7 @@ const OfferingPage4 = () => {
                 <Image
                   style={styles.icon}
                   contentFit="cover"
-                  source={require("../assets/home-icon1@3x.png")}
+                  source={require("../assets/home-icon1.png")}
                 />
               </Pressable>
               <Pressable
@@ -76,7 +76,7 @@ const OfferingPage4 = () => {
                 <Image
                   style={styles.icon}
                   contentFit="cover"
-                  source={require("../assets/temple-icon1@3x.png")}
+                  source={require("../assets/temple-icon1.png")}
                 />
               </Pressable>
               <Pressable
@@ -86,7 +86,7 @@ const OfferingPage4 = () => {
                   <Image
                     style={styles.icon}
                     contentFit="cover"
-                    source={require("../assets/shopping-bag-icon@3x.png")}
+                    source={require("../assets/shopping-bag-icon.png")}
                   />
               </Pressable>
               <Pressable
@@ -96,7 +96,7 @@ const OfferingPage4 = () => {
                 <Image
                   style={styles.icon}
                   contentFit="cover"
-                  source={require("../assets/user-icon@3x.png")}
+                  source={require("../assets/user-icon.png")}
                 />
               </Pressable>
             </View>
@@ -105,7 +105,7 @@ const OfferingPage4 = () => {
         <Image
           style={[styles.offeringPage2Child, styles.itemLayout]}
           contentFit="cover"
-          source={require("../assets/ellipse-3@3x.png")}
+          source={require("../assets/ellipse-3.png")}
         />
       </View>
       

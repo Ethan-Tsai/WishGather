@@ -29,7 +29,7 @@ const CartPage = () => {
 
       <Text style={[styles.text1, styles.textTypo]}>購物車</Text>
     </View>
-
+    <View style={styles.scrollViewWrapper}>
     <ScrollView contentContainerStyle={styles.scrollView} flex={1}>
       <View style={[styles.cartPageInner, styles.cartPageInnerPosition, { flexDirection: 'column' }]}>
         <CartItem
@@ -70,7 +70,7 @@ const CartPage = () => {
             />
       </View>
     </ScrollView>
-
+    </View>
     
       <View style={[styles.footer, styles.menuLayout]}>
         <View style={[styles.menu, styles.menuLayout]}>
@@ -123,9 +123,13 @@ const CartPage = () => {
 };
 
 const styles = StyleSheet.create({
-  
+  scrollViewWrapper: {
+    flex: 1,
+    marginTop: 140, 
+    marginBottom: 66, 
+  },
   scrollView: {
-    paddingTop: 140, 
+    paddingBottom: 140, 
   },
 
   fixedHeader: {

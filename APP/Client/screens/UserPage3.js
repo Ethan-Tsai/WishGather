@@ -48,7 +48,7 @@ const UserPage3 = () => {
           <Image
             style={styles.userPage3Child}
             contentFit="cover"
-            source={require("../assets/line-4@3x.png")}
+            source={require("../assets/line-4.png")}
           />
           <Pressable
             style={[styles.pressable, styles.pressablePosition]}

@@ -27,7 +27,7 @@ const UserPage22 = () => {
               <Image
                 style={styles.icon}
                 contentFit="cover"
-                source={require("../assets/go-back-button@3x.png")}
+                source={require("../assets/go-back-button.png")}
               />
             </Pressable>
             <Text style={styles.text1}>收藏清單</Text>
@@ -48,14 +48,14 @@ const UserPage22 = () => {
             <Image
               style={styles.tablermoodEmptyIcon}
               contentFit="cover"
-              source={require("../assets/tablermoodempty@3x.png")}
+              source={require("../assets/tablermoodempty.png")}
             />
             <Text style={[styles.text, styles.textTypo]}>暫無收藏商家</Text>
           </View>
           <Image
             style={styles.userPage22Child}
             contentFit="cover"
-            source={require("../assets/line-2@3x.png")}
+            source={require("../assets/line-2.png")}
           />
         </SafeAreaView>
       </PanGestureHandler>
