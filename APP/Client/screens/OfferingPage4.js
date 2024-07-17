@@ -102,11 +102,11 @@ const OfferingPage4 = () => {
             </View>
           </View>
         </View>
-        <Image
+        {/* <Image
           style={[styles.offeringPage2Child, styles.itemLayout]}
           contentFit="cover"
           source={require("../assets/ellipse-3.png")}
-        />
+        /> */}
       </View>
       
     </KeyboardAvoidingView>

@@ -222,11 +222,11 @@ const OfferingPage6 = () => {
           </View>
         </View>
       </View>
-      <Image
+      {/* <Image
         style={[styles.offeringPage2Child, styles.itemLayout]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
-      />
+      /> */}
       <Text style={[styles.text24, styles.textFlexBox]}>線上點燈</Text>
     </View>
   );

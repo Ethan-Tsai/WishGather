@@ -94,11 +94,11 @@ const HomePage = () => {
               </View>
             </View>
           </View>
-          <Image
+          {/* <Image
             style={[styles.footerChild, styles.childLayout]}
             contentFit="cover"
             source={require("../assets/ellipse-3.png")}
-          />
+          /> */}
         </View>
         <Pressable style={styles.locationIcon} onPress={openLocationIcon}>
           <Image

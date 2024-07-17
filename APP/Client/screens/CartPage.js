@@ -113,11 +113,11 @@ const CartPage = () => {
           </View>
         </View>
       </View>
-      <Image
+      {/* <Image
         style={[styles.cartPageChild, styles.innerLayout]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
-      />
+      /> */}
     </View>
   );
 };
