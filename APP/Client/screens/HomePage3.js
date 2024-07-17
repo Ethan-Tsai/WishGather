@@ -85,7 +85,7 @@ const HomePage3 = () => {
       >
         <Pressable
           style={[styles.wrapper, styles.text1Layout]}
-          onPress={() => navigation.navigate("HomePage4")}
+          onPress={() => navigation.navigate("UserPage")}
         >
           <Image
             style={styles.icon}
