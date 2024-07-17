@@ -10,7 +10,7 @@ const OfferingPage2 = () => {
   return (
     <Pressable
       style={[styles.offeringPage6, styles.offeringPage6Layout]}
-      onPress={() => navigation.navigate("OfferingPage3")}
+      onPress={() => navigation.navigate("UserPage")}
     >
       <View style={styles.background}>
         <Image
@@ -184,7 +184,7 @@ const OfferingPage2 = () => {
       <Text style={[styles.text37, styles.textTypo]}>訂單成立</Text>
       <Pressable
         style={[styles.confirmButton, styles.confirmLayout]}
-        onPress={() => navigation.navigate("OfferingPage3")}
+        onPress={() => navigation.navigate("UserPage")}
       >
         <Image
           style={[styles.confirmButtonChild, styles.confirmLayout]}

@@ -4,6 +4,7 @@ import { StyleSheet, Pressable, View, Text, Modal } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LogoutOverlay from "../components/LogoutOverlay";
 import { Border, Color, Padding, FontSize, FontFamily } from "../GlobalStyles";
+import Footer from "../components/footer";
 
 const UserPage = () => {
   const [textVisible, setTextVisible] = useState(false);
@@ -20,55 +21,7 @@ const UserPage = () => {
   return (
     <>
       <View style={styles.userPage}>
-        <View style={[styles.footer, styles.menuLayout]}>
-          <View style={styles.footer1}>
-            <View style={[styles.menu, styles.menuLayout]}>
-              <View style={styles.homeIconParent}>
-                <Pressable
-                  style={[styles.homeIcon, styles.iconLayout1]}
-                  onPress={() => navigation.navigate("HomePage")}
-                >
-                  <Image
-                    style={styles.icon}
-                    contentFit="cover"
-                    source={require("../assets/home-icon1.png")}
-                  />
-                </Pressable>
-                <Pressable
-                  style={[styles.templeIcon, styles.iconLayout1]}
-                  onPress={() => navigation.navigate("OfferingPage4")}
-                >
-                  <Image
-                  style={[styles.icon, styles.iconLayout1]}
-                  contentFit="cover"
-                  source={require("../assets/temple-icon.png")}
-                />
-
-                </Pressable>
-                <Pressable
-                  style={[styles.templeIcon, styles.iconLayout1]}
-                  onPress={() => navigation.navigate("CartPage")}
-                >
-                  <Image
-                    style={styles.icon}
-                    contentFit="cover"
-                    source={require("../assets/shopping-bag-icon.png")}
-                  />
-                </Pressable>
-                <Image
-                  style={[styles.templeIcon, styles.iconLayout1]}
-                  contentFit="cover"
-                  source={require("../assets/user-icon1.png")}
-                />
-              </View>
-            </View>
-          </View>
-          <Image
-            style={styles.footerChild}
-            contentFit="cover"
-            source={require("../assets/ellipse-3.png")}
-          />
-        </View>
+        <Footer />
         <Image
           style={styles.userPageChild}
           contentFit="cover"
@@ -188,11 +141,11 @@ const UserPage = () => {
             source={require("../assets/mingcuterightfill.png")}
           />
         </Pressable>
-        <Image
+        {/* <Image
           style={styles.ellipseIcon}
           contentFit="cover"
           source={require("../assets/ellipse-31.png")}
-        />
+        /> */}
       </View>
 
       <Modal animationType="fade" transparent visible={textVisible}>

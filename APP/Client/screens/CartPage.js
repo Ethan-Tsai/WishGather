@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import CartItem from "../components/CartItem";
 import { FontFamily, Border, FontSize, Color, Padding } from "../GlobalStyles";
+import Footer from "../components/footer";
 
 const CartPage = () => {
   const navigation = useNavigation();
@@ -71,8 +72,8 @@ const CartPage = () => {
       </View>
     </ScrollView>
     </View>
-    
-      <View style={[styles.footer, styles.menuLayout]}>
+    <Footer />
+      {/*<View style={[styles.footer, styles.menuLayout]}>
         <View style={[styles.menu, styles.menuLayout]}>
           <View style={[styles.homeIconParent, styles.iconPosition]}>
             <Pressable
@@ -113,7 +114,7 @@ const CartPage = () => {
           </View>
         </View>
       </View>
-      {/* <Image
+       <Image
         style={[styles.cartPageChild, styles.innerLayout]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}

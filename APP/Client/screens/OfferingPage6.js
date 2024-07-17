@@ -4,6 +4,7 @@ import { StyleSheet, Pressable, View, Text, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontSize, FontFamily, Padding } from "../GlobalStyles";
 // import { ScrollView } from "react-native-gesture-handler";
+import Footer from "../components/footer";
 
 const OfferingPage6 = () => {
   const navigation = useNavigation();
@@ -21,7 +22,8 @@ const OfferingPage6 = () => {
         />
       </Pressable>
       <View style={styles.scrollViewWrapper}>
-      <ScrollView contentContainerStyle={styles.scrollView} flex={1}>
+      {/* <ScrollView contentContainerStyle={styles.scrollView} flex={1}> */}
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <View style={styles.offeringPage2Inner}>
         
         <View style={[styles.parent, styles.menuPosition]}>
@@ -176,7 +178,8 @@ const OfferingPage6 = () => {
         </View>
         </ScrollView>
         </View>
-      <View style={[styles.footer, styles.menuLayout]}>
+      <Footer />
+      {/*<View style={[styles.footer, styles.menuLayout]}>
         <View style={[styles.menu, styles.menuLayout]}>
           <View style={styles.homeIconParent}>
             <Pressable

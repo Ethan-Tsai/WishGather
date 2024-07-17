@@ -81,7 +81,7 @@ const HomePage3 = () => {
       <Text style={[styles.text, styles.textTypo]}>訂單成立</Text>
       <Pressable
         style={[styles.confirmButton, styles.text1Layout]}
-        onPress={() => navigation.navigate("HomePage4")}
+        onPress={() => navigation.navigate("UserPage")}
       >
         <Pressable
           style={[styles.wrapper, styles.text1Layout]}

@@ -4,6 +4,7 @@ import { StyleSheet, Pressable, View, Text, ScrollView, KeyboardAvoidingView, Pl
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, Padding, FontSize, FontFamily } from "../GlobalStyles";
 import ProductItem from "../components/ProductItem";
+import Footer from "../components/footer";
 
 const OfferingPage4 = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,7 +57,8 @@ const OfferingPage4 = () => {
           </View>
         </ScrollView>
         {/* Footer */}
-        <View style={[styles.footer, styles.menuLayout]}>
+        <Footer />
+        {/* <View style={[styles.footer, styles.menuLayout]}>
           <View style={[styles.menu, styles.menuLayout]}>
             <View style={[styles.homeIconParent, styles.parentFlexBox]}>
               <Pressable
@@ -101,7 +103,7 @@ const OfferingPage4 = () => {
               </Pressable>
             </View>
           </View>
-        </View>
+        </View> */}
         {/* <Image
           style={[styles.offeringPage2Child, styles.itemLayout]}
           contentFit="cover"

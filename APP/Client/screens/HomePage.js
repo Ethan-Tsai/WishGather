@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import AddressOverlay from "../components/AddressOverlay";
 import Activity from "../components/Activity";
 import { Border, Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
+import Footer from "../components/footer";
 
 const HomePage = () => {
   const [searchBarContainerVisible, setSearchBarContainerVisible] =
@@ -62,7 +63,8 @@ const HomePage = () => {
             source={require("../assets/search-icon.png")}
           />
         </Pressable>
-        <View style={[styles.footer, styles.menuLayout]}>
+        <Footer />
+        {/* <View style={[styles.footer, styles.menuLayout]}>
           <View style={[styles.footer1, styles.footer1Position]}>
             <View style={[styles.menu, styles.menuLayout]}>
               <View style={styles.homeIconParent}>
@@ -94,12 +96,12 @@ const HomePage = () => {
               </View>
             </View>
           </View>
-          {/* <Image
+          <Image
             style={[styles.footerChild, styles.childLayout]}
             contentFit="cover"
             source={require("../assets/ellipse-3.png")}
-          /> */}
-        </View>
+          />
+        </View> */}
         <Pressable style={styles.locationIcon} onPress={openLocationIcon}>
           <Image
             style={styles.icon}
