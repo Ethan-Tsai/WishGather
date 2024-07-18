@@ -3,7 +3,7 @@ import { Image } from "expo-image";
 import { StyleSheet, Pressable, View, Text, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontSize, FontFamily, Padding } from "../GlobalStyles";
-// import { ScrollView } from "react-native-gesture-handler";
+// import { ScrollView } from "react-native-gesture-handler"; //測試
 import Footer from "../components/footer";
 
 const OfferingPage6 = () => {
