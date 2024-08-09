@@ -58,7 +58,7 @@ const db = require('./config/db');
 //資料庫操作
 
 // 通用的資料查詢函數
-const { queryDatabase } = require('./query/queryALL');
+const { queryDatabase, queryMatchingData } = require('./query/queryALL');
 
 
 
@@ -98,7 +98,7 @@ app.get('/order', (req, res) => queryDatabase('訂購', res));
 
 app.get('/cooperate', (req, res) => queryDatabase('合作', res));
 
-
+app.get('/match/:id', (req, res) => queryMatchingData(req.params.id, res));
 
 //Signup route
 app.post('/believers', async(req, res) => {
