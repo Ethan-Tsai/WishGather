@@ -276,7 +276,7 @@ const UserPage = () => {
           source={require("../assets/ellipse-31.png")}
         />
         </View>
-      </View>
+     
 
       <Modal animationType="fade" transparent visible={textVisible}>
         <View style={styles.textOverlay}>
