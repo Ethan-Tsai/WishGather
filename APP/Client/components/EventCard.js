@@ -1,5 +1,5 @@
 import { React, useState, useRef } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, Animated} from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, Animated, TouchableWithoutFeedback} from 'react-native';
 import { Swipeable, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native';
 import  Dialog  from "react-native-dialog";
@@ -41,10 +41,9 @@ function renderRightActions (progress, dragAnimatedValue, showDialog, goEdit, ev
 function EventCard ({ event, size }){
     const navigation = useNavigation();
     const [dialogVisible, setDialogVisible] = useState(false);
+    const [activeSwipeable, setActiveSwipeable] = useState(null);
     const swipeableRef = useRef(null);
     
-
-
     const showDialog = () => {
       setDialogVisible(true);
     };
@@ -67,11 +66,26 @@ function EventCard ({ event, size }){
         return lunarDateString;
     }
 
+    const handleSwipeableOpen = (id) => {
+        if (activeSwipeable && activeSwipeable !== id) {
+            activeSwipeable.close();
+        }
+        setActiveSwipeable(swipeableRef.current);
+    };
+
+    const handleSwipeableClose = () => {
+        setActiveSwipeable(null);
+    };
+    const handleTouchOutside = () => {
+        if (activeSwipeable) {
+            activeSwipeable.close();
+        }
+    };
+
     
     const goEdit = () => {
         swipeableRef.current?.close();
-        navigation.navigate('EditTempleInfoPage', 
-                            { 
+        navigation.navigate('EditTempleInfoPage', { 
                                 event: event, 
                                 forEdit: true
                             });
@@ -82,30 +96,33 @@ function EventCard ({ event, size }){
                 <View style={[styles.card, getCardSize(size)]}>
                     <Image source={event.imageUrl} style={styles.image} />
                     <Text style={styles.overlayText}>{convertSolarDateToLunarDate(event.TIME)}</Text>
-                    
                 </View>
         );
     }
     if(size == "rectangle"){
         return (
-            <View>
-                <Swipeable 
-                    renderRightActions={(progress, dragAnimatedValue) => renderRightActions(progress, dragAnimatedValue, showDialog, goEdit)}
-                    ref={swipeableRef}>
-                    <View style={[styles.card, getCardSize(size)]}>
-                        <Image source={event.imageUrl} style={styles.image} />
-                        <Text style={styles.overlayText}>{convertSolarDateToLunarDate(event.TIME)}</Text>
-                    </View>
-                </Swipeable>  
-                <Dialog.Container visible={dialogVisible}>
-                    <Dialog.Title>Account delete</Dialog.Title>
-                    <Dialog.Description>
-                    Do you want to delete this account? You cannot undo this action.
-                    </Dialog.Description>
-                    <Dialog.Button label="Cancel" onPress={handleCancel}/>
-                    <Dialog.Button label="Delete" onPress={handleDelete}/>
-                </Dialog.Container>
-            </View>
+            <TouchableWithoutFeedback onPress={handleTouchOutside}>
+                <View>
+                    <Swipeable 
+                        renderRightActions={(progress, dragAnimatedValue) => renderRightActions(progress, dragAnimatedValue, showDialog, goEdit)}
+                        ref={swipeableRef}
+                        onSwipeableWillOpen={() => handleSwipeableOpen(event.tNO)}
+                        onSwipeableWillClose={handleSwipeableClose}>
+                        <View style={[styles.card, getCardSize(size)]}>
+                            <Image source={event.imageUrl} style={styles.image} />
+                            <Text style={styles.overlayText}>{convertSolarDateToLunarDate(event.TIME)}</Text>
+                        </View>
+                    </Swipeable>  
+                    <Dialog.Container visible={dialogVisible}>
+                        <Dialog.Title>刪除</Dialog.Title>
+                        <Dialog.Description>
+                        確認刪除這筆法會資料？
+                        </Dialog.Description>
+                        <Dialog.Button label="Cancel" onPress={handleCancel}/>
+                        <Dialog.Button label="Delete" onPress={handleDelete}/>
+                    </Dialog.Container>
+                </View>
+            </TouchableWithoutFeedback>
         )
     }  
 };

@@ -1,22 +1,34 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import { View, Text, Button, TouchableOpacity, Dimensions, Image, StyleSheet, Pressable, SafeAreaView } from 'react-native'
 import { SafeAreaProvider,  useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import TempleDelieverPage from '../screens/Temple/TempleDeliverPage';
 
 function MatchingInfoCard({infos}){
-    const { matchingStatus } = infos.MATCHING_STATUS;
-    let statusText;
-    switch (matchingStatus) {
-        case "A": 
-            statusText = styles.waitStatus;
-            break;
-        case "B":
-            statusText = styles.confirmedStatus;
-            break;
-        default :
-            statusText = styles.defaultStatus;
+    const navigation = useNavigation();
+    const [statusText, setStatusText] = useState("");
+    const [statusColor, setStatusColor] = useState(styles.defaultStatus);
+    useEffect(() => {
+        switch (infos.MATCHING_STATUS) {
+            case 'A':
+                setStatusText('未送出');
+                setStatusColor(styles.notDelivered);
+                break;
+            case 'B': 
+                setStatusText('配送中');
+                setStatusColor(styles.inTransit);
+                break;
+            case 'C':
+                setStatusText('已送達');
+                setStatusColor(styles.delivered);
+                break;
+            default: 
+                setStatusColor(styles.defaultStatus);
+        }
+    }, [infos.MATCHING_STATUS]);
+    const handlePress = () => {
+        navigation.navigate('TempleDeliverPage', { welfareId: infos.WELFARE_ID })
     }
-    // get welfare icon from database using instituition name 
     return (
         <View style={styles.cardContainer}>
             <View style={styles.logoContainer}>
@@ -25,10 +37,12 @@ function MatchingInfoCard({infos}){
             <View style={styles.bottomContainer}>
                 <View style={styles.infoContainer}>
                     <Text style={styles.title}>{ infos.NAME }</Text>
-                    <Text style={statusText}>{ infos.MATCHING_STATUS }</Text>
+                    <Text style={[styles.statusText, statusColor]}>{ statusText}</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity 
+                        style={styles.button}
+                        onPress={handlePress}>
                         <Text style={styles.btnText}>內容</Text>
                     </TouchableOpacity>
                 </View>
@@ -52,12 +66,17 @@ const styles = StyleSheet.create({
 
         backgroundColor: "white",
         borderWidth: "1px",
-        borderColor: "#ccc",
+        // borderColor: "#ccc",
         borderRadius: 10,
         marginVertical: 10,
         paddingHorizontal: 10,
         paddingVertical: 35,
-        peddingTop: 10
+        peddingTop: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 5, // This is for Android shadow
         
     },
     bottomContainer: {
@@ -72,7 +91,7 @@ const styles = StyleSheet.create({
     },
     image:{
         width: 85,
-        height: 85,
+        height: 75,
     },
     title:{
         fontSize: 20,
@@ -88,18 +107,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
-    waitStatus:{
-        fontSize: 16,
-        color: "#F6AB3A",
-        fontWeight: "bold"
+    statusText: {
+        fontWeight: 'bold'
     },
-    confirmedStatus: {
-        color: "#0b961b",
-        fontWeight: "bold"
+    delivered: {
+        color: 'green'
     },
-    defaultStatus: {
-        color: "#ccc",
-        fontWeight: "bold"
+    inTransit: {
+        color: 'orange'
+    },
+    notDelivered: {
+        color: 'red'
+    },
+    defaultStatus:{
+        color: '#333'
     }
 })
 

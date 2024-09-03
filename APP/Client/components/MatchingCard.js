@@ -1,33 +1,37 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 
 const MatchingCard = ({infos}) => {
     const [statusText, setStatusText] = useState("");
-    const getStatusColor = (status) => {
-        switch (status) {
+    const [statusColor, setStatusColor] = useState(styles.defaultStatus);
+
+    useEffect(() => {
+        switch (infos.MATCHING_STATUS) {
             case 'A':
                 setStatusText('未送出');
-                return styles.notDelivered;
+                setStatusColor(styles.notDelivered);
+                break;
             case 'B': 
                 setStatusText('配送中');
-                return styles.inTransit;
+                setStatusColor(styles.inTransit);
+                break;
             case 'C':
                 setStatusText('已送達');
-                return styles.delivered;
-        
+                setStatusColor(styles.delivered);
+                break;
             default: 
-                return styles.defaultStatus;
+                setStatusColor(styles.defaultStatus);
         }
-    }
+    }, [infos.MATCHING_STATUS]);
+
     return (
         <View style={styles.card}>
-            {/* <Image source={infos.image} style={styles.image} /> */}
             <View style={styles.middleTitle}>
                 <Text style={styles.titlePrimary}>{infos.NAME}</Text>
                 <Text style={styles.titleSecond}>{infos.ADDRESS}</Text>
             </View>
             <View style={styles.state}>
-                <Text style={getStatusColor(infos.MATCHING_STATUS)}>{statusText}</Text>
+                <Text style={statusColor}>{statusText}</Text>
             </View>
         </View>
     );

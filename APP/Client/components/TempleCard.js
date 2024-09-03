@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, View, Text, Image, StyleSheet, Dimensions } from "react-native";
-import { Color, Border, FontSize, FontFamily } from "../GlobalStyles";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 
@@ -17,13 +17,16 @@ const TempleCard = ({ imageSource, title, distance, onPress, onSave }) => {
     <Pressable style={styles.container} onPress={onPress}>
       <Image style={styles.image} source={imageSource} />
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.distance}>{distance}</Text>
+        <Text style={{ lineHeight: 25 }}>
+          <Text style={styles.title}>{title}{'\n'}</Text>
+          <Text style={styles.distance}>{distance}</Text>
+        </Text>
       </View>
       <Pressable style={styles.savedStateIcon} onPress={handleSavePress}>
-        <Image
-          style={styles.savedStateIcon}
-          source={isSaved ? require("../assets/saved-state.png") : require("../assets/saved-state1.png")}
+        <MaterialCommunityIcons
+          name={isSaved ? "heart" : "heart-outline"}
+          size={38}
+          color={isSaved ? "orange" : "gray"}
         />
       </Pressable>
     </Pressable>
@@ -32,43 +35,36 @@ const TempleCard = ({ imageSource, title, distance, onPress, onSave }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.9,
+    width: width * 0.95,
     height: 140,
-    backgroundColor: Color.colorGray_100,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    borderWidth: 1,
-    borderColor: Color.colorWhitesmoke_300,
-    borderRadius: Border.br_3xs,
-    marginBottom: 10,
+    borderBottomWidth: 0.5,
+    borderColor: '#ccc',
     position: 'relative',
   },
   image: {
     width: 100,
     height: 100,
-    borderRadius: Border.br_8xs,
   },
   textContainer: {
     flex: 1,
-    paddingLeft: 10,
+    paddingLeft: 20,
     justifyContent: 'center',
   },
   title: {
-    fontSize: FontSize.size_4xl,
-    fontFamily: FontFamily.interMedium,
-    fontWeight: '500',
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#4F4F4F',
   },
   distance: {
-    fontSize: FontSize.size_xl,
-    color: Color.colorGray_400,
+    fontSize: 16,
+    color: 'gray',
   },
   savedStateIcon: {
-    width: 40,
-    height: 40,
-    position: 'absolute',
-    right: 10,
-    top: 10,
+    padding: 3,
   },
 });
 

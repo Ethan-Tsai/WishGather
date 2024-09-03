@@ -1,146 +1,92 @@
-import * as React from "react";
-import { Text, StyleSheet, View  ,ScrollView, Pressable } from "react-native";
-import { Image } from "expo-image";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
+import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
-import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const UserPage2 = () => {
+import GoBackButton1 from "../components/GoBackButton1";
+import CollectedTemple from "../components/CollectedTemple";
+
+const { width } = Dimensions.get('window');
+const API = require('./DBconfig');
+
+const UserPage21 = () => {
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+  const [temples, setTemples] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${API}/temples`)
+      .then(response => {
+        setTemples(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the temples!!!', error);
+      });
+  }, []);
+
+  const renderItem = ({ item }) => (
+    <CollectedTemple
+      templeImage={{ uri: item.IMAGE || 'default_image_path.png' }}
+      templeName={item.NAME}
+      address={item.ADDRESS}
+      onPressablePress={() => navigation.navigate("OfferingPage")}
+    />
+  );
 
   return (
-    <View style={styles.userPage4}>
-      <View style={styles.applicationSoftwareLicenseAWrapper}>
+    <SafeAreaProvider>
+      <View style={{
+        flex: 1,
+        backgroundColor: "white",
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right
+      }}>
       
-        {/*返回鍵*/}
-        <Pressable
-          style={styles.goBackButton}
-          onPress={() => navigation.navigate("UserPage")}
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/go-back-button.png")}
-          />
-        </Pressable>
-
-        {/*標題*/}
-        <Text style={[styles.title, styles.textTypo]}>服務條款</Text>
-
-        {/*服務條款文字*/}
-        <ScrollView style={styles.scrollbox}>
-          <Text style={[styles.applicationSoftwareLicense]}>{`
-
-
-
-
-
-
-
-Application Software License Agreement
-
-This  Application Software License Agreement ("Agreement") is entered into between [Developer/Company Name], a [State/Country] corporation, located at [Address] ("Developer"), and the end user ("User") of the iOS application ("Application").
-
-1. Grant of License
-Subject to the terms and conditions of this Agreement, Developer grants User a limited, non-exclusive, non-transferable license to download, install, and use the Application solely for User's personal, non-commercial use on any iOS device that User owns or controls.
-
-2. Restrictions
-User shall not:
-- Modify, adapt, translate, or create derivative works of the Application.
-- Reverse engineer, decompile, disassemble, or attempt to derive the source code of the Application.
-- Remove, alter, or obscure any copyright, trademark, or other proprietary notices from the Application.
-- Rent, lease, lend, sell, redistribute, or sublicense the Application.
-- Use the Application for any unlawful purpose or in any manner inconsistent with this Agreement.
-
-3. Ownership
-Developer retains all rights, title, and interest in and to the Application, including all intellectual property rights therein. This Agreement does not convey to User any rights of ownership in or related to the Application.
-
-4. Updates and Support
-Developer may, but is not obligated to, provide updates, upgrades, or support for the Application. User acknowledges that Developer has no obligation to provide any maintenance or support services for the Application.
-
-5. Warranty Disclaimer
-
-THE APPLICATION IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, DEVELOPER DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-
-6. Limitation of Liability
-IN NO EVENT SHALL DEVELOPER BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR RELATING TO USER'S USE OR INABILITY TO USE THE APPLICATION.
-
-7. Termination
-Developer may terminate this Agreement at any time without notice if User breaches any provision of this Agreement. Upon termination, User must cease all use of the Application and delete all copies of the Application from User's iOS device(s).
-
-
-8. Governing Law
-This Agreement shall be governed by and construed in accordance with the laws of [State/Country] without regard to its conflict of law provisions.
-
-9. Entire Agreement
-This Agreement constitutes the entire agreement between Developer and User concerning the subject matter hereof and supersedes all prior or contemporaneous agreements, representations, warranties, and understandings.
-
-10. Contact Information
-If User has any questions about this Agreement, User may contact Developer at [Contact Email/Address].
-
-11. Acceptance
-
-BY DOWNLOADING, INSTALLING, OR USING THE APPLICATION, USER ACKNOWLEDGES THAT USER HAS READ, UNDERSTOOD, AND AGREES TO `}</Text>
-  </ScrollView>
+        <GoBackButton1 destination="UserPage" />
+        
+        <View style={styles.titleContainer}>
+          <MaterialCommunityIcons name="heart" size={24} color="orange" style={styles.icon} />
+          <Text style={styles.pageTitle}>我的收藏</Text>
+        </View>
+        
+        <FlatList
+          data={temples}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.tID}  // Ensure that `item.ID` is a unique identifier
+          contentContainerStyle={styles.flatListContainer}
+        />
       </View>
-  
-    </View>
+    </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  textTypo: {
-    display: "flex",
-    fontFamily: FontFamily.interRegular,
-    alignItems: "center",
-    position: "absolute",
+  titleContainer: {
+    width: width * 0.95,
+    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: 'center',
+    alignSelf: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 15,
   },
-
-  applicationSoftwareLicense: {
-    top: -95,
-    fontSize: 10,
-    height: 844,
-    width: '100%',
-  },
-  applicationSoftwareLicenseAWrapper: {
-    top: '119',
-    left: 33,
-    height: 806,
-    width: 364,
-    position: "absolute",
-  },
-  title: {
-    top: '7%',
-    left: '33%',
-    fontSize: 30,
-    textAlign: "center",
-    width: 120,
-    height: 77,
-  },
-  
   icon: {
-    height: "100%",
-    width: "100%",
+    marginRight: 10,
   },
-  goBackButton: {  
-    top: '5%',
-    width: 40,
-    height: 40,
-    position: "absolute",
+  pageTitle: {
+    fontSize: 28,
+    color: "#4F4F4F",
+    fontWeight: "bold",
+    textAlign: 'left',
+    marginBottom: 5,
   },
-  scrollbox:{
-    top:'15%',
-    width:'auto',
-    height:'70%',
-    paddingHorizontal:10,
-
-  },
-  userPage4: {
-    backgroundColor: Color.colorGray_100,
-    flex: 1,
-    height: 'auto',
-    overflow: "hidden",
-    width: "100%",
+  flatListContainer: {
+    paddingBottom: 20,
   },
 });
 
-export default UserPage2;
+export default UserPage21;

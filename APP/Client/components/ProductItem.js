@@ -1,79 +1,66 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
-import { FontFamily, Border, FontSize, Color } from "../GlobalStyles";
+import { useNavigation } from '@react-navigation/native';
 
-const ProductItem = ({ onPress, imageSource, title, backgroundColor, fontFamily }) => {
+
+const ProductItem = ({ destination, imageSource, title, price }) => {
+  const navigation = useNavigation();
+
   return (
-    <View style = {styles.box}>
-        <Pressable
-        style={styles.pressable}
-        onPress={onPress}
-        >
+    <Pressable
+      style={styles.container}
+      onPress={() => navigation.navigate(destination)}
+    >
+      {/* Image */}
+      <View style={styles.imageContainer}>
         <Image
-            style={[styles.child, styles.childPosition]}
-            contentFit="cover"
-            source={imageSource}
+          style={styles.productImage}
+          source={imageSource}
         />
-        <View style={[styles.item, styles.childPosition, { backgroundColor: backgroundColor || Color.colorWhite }]} />
-        <Text style={[styles.text1, styles.textFlexBox, { fontFamily: fontFamily || FontFamily.robotoRegular }]}>
-            {title}
-        </Text>
-        </Pressable>
-    </View>
-    
+      </View>
+      {/* Price */}
+      {/* <Text style={[styles.price]}>{price}</Text> */}
+      
+      {/* title */}
+      <View style={{width:'100%'}}>
+        <Text style={[styles.title]}>{title}</Text>
+      </View>
+      
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  childPosition: {
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    position: "absolute",
-    width: "100%",
+  container: {
+    width: 120,
+    height: 180,
+    marginHorizontal: 0,
+    alignItems: 'center',
+    // borderWidth:1
   },
-  child: {
-    borderRadius: Border.br_3xs,
+  imageContainer: {
+    width: '100%',
     
-    top: "0%",
-    height: "100%",
-    maxHeight: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
   },
-  box:{
-    margin:5
-
+  productImage: {
+    width: '100%',
+    height: '100%',
+    height: 120,
+    
   },
-  item: {
-    height: "26.69%",
-    top: "73.31%",
-    borderBottomRightRadius: Border.br_3xs,
-    borderBottomLeftRadius: Border.br_3xs,
-    borderStyle: "solid",
-    borderColor: Color.colorLightgray,
-    borderWidth: 2,
-    bottom: "0%",
-    right: "0%",
+  price: {
+    marginTop: 15,
+    fontSize: 16,
+    color: 'orange',
+    fontWeight: 'bold',
   },
-  text1: {
-    height: "20%",
-    width: "50%",
-    top: "75%",
-    left: "26%",
-    fontSize: FontSize.size_lg,
-    color: Color.colorBlack,
-    textAlign: "center",
-    justifyContent: "center",
-  },
-  pressable: {
-    width: 160,
-    height: 160,
-  },
-  textFlexBox: {
-    alignItems: "center",
-    display: "flex",
-    position: "absolute",
+  title: {
+    width: '100%',
+    marginTop: 8,
+    fontSize: 14,
+    fontWeight:'bold',
+    color: '#4F4F4F',
+    textAlign: 'center',
   },
 });
 

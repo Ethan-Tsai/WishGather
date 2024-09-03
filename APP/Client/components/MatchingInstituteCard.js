@@ -55,23 +55,17 @@ let screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
-        borderRadius: 10,
-        marginBottom: 15,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 5,
-
+        borderWidth: 1,
+        borderColor: "#ccc",
         flex: 1,
         flexDirection: "column",
         justifyContent: "space-around",
         alignItems: "center",
         gap: 30,
-        width: screenWidth * 0.8,
+        width: screenWidth,
         height: "auto",
         paddingVertical: 30,
-        paddingHorizontal: 18
+        paddingHorizontal: 30
 
     },
     upperContainer: {

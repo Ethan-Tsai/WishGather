@@ -1,14 +1,21 @@
-import { ScrollView, StyleSheet, View, TextInput, Text, KeyboardAvoidingView, Platform, Pressable, YellowBox, Alert } from 'react-native';
+import { ScrollView, StyleSheet, View, TextInput, Text, KeyboardAvoidingView, Platform, Pressable, Dimensions, Alert } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontSize, Padding, FontFamily, Color, Border } from "../GlobalStyles";
 import axios from 'axios';
 import React, { useState } from 'react';
 
+import GoBackButton1 from '../components/GoBackButton1';
+import SetButton from '../components/Utility/SetButton';
+
 const API=require('./DBconfig')
+
+const { width, height } = Dimensions.get('window');
 
 const UserPage4 = () => {
 
+  const insets = useSafeAreaInsets();
   const [newName, setName] = useState('');
   const [newPhone, setPhone] = useState('');
   const [newEmail, setEmail] = useState('');
@@ -28,10 +35,11 @@ const UserPage4 = () => {
     }
 
     if (!newPassword) {
-      Alert.alert('Error', 'Password is required');
+      Alert.alert('Error', 'Password is required ');
       return;
     }
 
+    //API後面放要作用的後端
     const api = `${API}/believersUpdate`;
     try {
       const user = {
@@ -73,59 +81,57 @@ const UserPage4 = () => {
   };
 
   const navigation = useNavigation();
+
+  {/* Style */}
   return (
-    
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps="handled">
-    
-      <View style={styles.userPage4}>
+    <SafeAreaProvider>
+      <View style={{
+          flex: 1,
+          backgroundColor: "white",
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right
+        }}>
           
-          <Pressable
-          style={styles.goBackButton}
-          onPress={() => navigation.navigate("UserPage")}
-          >
-          <Image
-            style={styles.icon}
+        <GoBackButton1  destination="UserPage" />
+
+        <View style={styles.titleContainer}>
+            <Text style={styles.pageTitle}>個資維護</Text>
+
+            {/* 待修改 : 增加更換照片功能 */}
+            <Image
+            style={styles.userImage}
             contentFit="cover"
-            source={require("../assets/go-back-button.png")}
-          />
-        </Pressable>
-
-        <Text style={[styles.title, styles.textTypo]}>個資維護</Text>
-
-        <Image
-          style={styles.userPageChild}
-          contentFit="cover"
-          source={require("../assets/ellipse-2.png")}
-        />
-
-        {/* 待修改 : 增加更換照片功能 */}
+            source={require("../assets/ellipse-2.png")}
+            />
+        </View>
        
-        {/* 輸入框 */}
+        {/* TextInput */}
         <View style={styles.formContainer}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>姓名</Text>
 
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>姓名 :</Text>
               <TextInput 
-              placeholder="姓名" 
+              placeholder=" 中文姓名" 
               style={styles.input} 
               value={newName}
               onChangeText={setName}/>
             </View>
 
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>電子郵件</Text>
+              <Text style={styles.label}>電子郵件 :</Text>
               <TextInput
-              placeholder="電子郵件" 
+              placeholder=" 電子郵件" 
               style={styles.input} 
               value={newEmail}
               onChangeText={setEmail}/>
             </View>
 
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>密碼</Text>
+              <Text style={styles.label}>密碼 :</Text>
               <TextInput 
-              placeholder="密碼" 
+              placeholder=" 密碼" 
               style={styles.input} 
               secureTextEntry 
               value={newPassword}
@@ -133,23 +139,28 @@ const UserPage4 = () => {
             </View>
 
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>連絡電話</Text>
+              <Text style={styles.label}>連絡電話 :</Text>
               <TextInput 
-              placeholder="連絡電話" 
+              placeholder=" 連絡電話" 
               style={styles.input}
               value={newPhone}
               onChangeText={setPhone}
                />
             </View>
+        </View>
 
-            {/* <View style={styles.inputContainer}>
-              <Text style={styles.label}>付款方式</Text>
-              <TextInput placeholder="付款方式" style={styles.input} secureTextEntry />
-            </View> */}
-          </View>
+        <View style={styles.buttonContainer}>
+          <SetButton 
+            btnText={'確認送出'} 
+            btnStatus={'primary'} 
+            onPress={handleRegisterUpdate}
+          />
+        </View>
+
+          
 
           {/* 確認送出按钮 */}
-          <Pressable
+          {/* <Pressable
             style={[styles.confirmButton, styles.confirmLayout]}
             onPress={handleRegisterUpdate}
           >
@@ -159,108 +170,67 @@ const UserPage4 = () => {
               source={require("../assets/rectangle-91.png")}
             />
             <Text style={[styles.buttontext, styles.confirmLayout]}>確認送出</Text>
-          </Pressable>
+          </Pressable> */}
 
           {/* 確認送出連接資料庫的地方 */}
       </View>
-
-      </ScrollView>
-    </KeyboardAvoidingView>
+    </SafeAreaProvider> 
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  
-  scrollView: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-  title: {
-    top: '7%',
-    left: '35%',
-    fontSize: 30,
-    textAlign: "center",
-    width: 120,
-    height: 77,
-  },
+  titleContainer: {
+    width: width*0.95,
+    justifyContent: "center",
+    alignItems: 'center',
+    alignSelf:'center',      
+    paddingHorizontal: 10,
+    marginBottom: 25
 
-  textTypo: {
-    display: "flex",
-    fontFamily: FontFamily.interRegular,
-    alignItems: "center",
-    position: "absolute",
+    // borderWidth:1
   },
-  formContainer: {
-    top :'80%',
-    width: '100%',
-    
+  pageTitle: {
+    fontSize: 28,
+    color: "#4F4F4F",
+    fontWeight: "bold",
+    textAlign: 'left',
+    marginBottom:20,
   },
-
-  icon: {
-    height: "100%",
-    width: "100%",
+  userImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 50,
   },
-  goBackButton: {
-    
-    top: '5%',
-    width: 40,
-    height: 40,
-    position: "absolute",
-  },
- 
-  inputContainer: {
-    marginBottom: 15,
+  formContainer:{
+    width: width*0.95,
+    justifyContent:'center',
+    alignSelf:'center',
+    paddingHorizontal: 15
   },
   label: {
-    marginBottom: 5,
     fontSize: 16,
-    color: '#333',
+    fontWeight:'bold',
+    color: '#4F4F4F',
+    marginBottom: 10,
+  },
+  inputContainer: {
+    marginBottom: 20,
   },
   input: {
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
-    
   },
-  userPageChild: {
-    top: '30%',
-    left: '30%',
-    width: 170,
-    height: 170,
-    position: "absolute",
-  },
-  confirmLayout: {
-    height: 70,
-    width: 300,
-    position: "absolute",
-  },
-  confirmButton: {
-    top: 746,
-    left:'10%',
-  },
-  confirmButtonChild: {
-    borderRadius: Border.br_xl,
-    display: "flex",
+  buttonContainer: {
+    width: width,
     justifyContent: "center",
-    alignItems: "center",
-    
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 60,
   },
-  buttontext: {
-    fontSize: FontSize.size_11xl,
-    color: Color.colorWhite,
-    textAlign: "center",
-    justifyContent: "center",
-    fontFamily: FontFamily.interSemiBold,
-    fontWeight: "600",
-    alignItems: "center",
-    display: "flex",
-    marginTop: 10,
-  },
+ 
+  
 
   
 });

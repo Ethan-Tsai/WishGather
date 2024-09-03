@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   addressInput: {
     width: "85%",
     height: 100,
-    borderRadius: 15,
+    textAlignVertical:'top',
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: "#ccc",
     paddingHorizontal: 10,

@@ -1,179 +1,100 @@
-import * as React from "react";
-import { Image } from "expo-image";
-import { StyleSheet, Pressable, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, Dimensions, FlatList } from "react-native";
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
-import TabBar from "../components/TabBar";
-import Component from "../components/Component1";
-import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import GoBackButton1 from "../components/GoBackButton1";
+import HistoryOrderCard from "../components/HistoryOrderCard";
+
+const { width } = Dimensions.get('window');
 
 const UserPage3 = () => {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
 
+  const orderData = [
+    {
+      id: '1',
+      templeName: '左營 仁濟宮 \n',
+      orderInfo: '3',
+      orderDate: '2024/04/25',
+      orderStatus: '待取貨',
+      imageSource: require("../assets/rectangle-211.png"),
+    },
+    {
+      id: '2',
+      templeName: '鳳邑 雷府大將廟 \n',
+      orderInfo: '2',
+      orderDate: '2024/04/20',
+      orderStatus: '已完成',
+      imageSource: require("../assets/rectangle-211.png"),
+    },
+    // Add more orders here
+  ];
+
+  const renderOrderCard = ({ item }) => (
+    <HistoryOrderCard
+      templeName={item.templeName}
+      orderInfo={item.orderInfo}
+      orderDate={item.orderDate}
+      orderStatus={item.orderStatus}
+      imageSource={item.imageSource}
+      onPressablePress={() => navigation.navigate("OfferingPage3")}
+    />
+  );
+
   return (
-    <View style={styles.userPage31}>
-      <Pressable
-        style={[styles.goBackButton, styles.pressablePosition]}
-        onPress={() => navigation.navigate("UserPage")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/go-back-button.png")}
+    <SafeAreaProvider>
+      <View style={{
+          flex: 1,
+          backgroundColor: "white",
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right
+        }}>
+        
+        <GoBackButton1 destination="UserPage" />
+        
+        <View style={styles.titleContainer}>
+          <MaterialCommunityIcons name="history" size={28} color="orange" style={styles.icon}/>
+          <Text style={styles.pageTitle}>歷史訂單</Text>
+        </View>
+
+        <FlatList
+          data={orderData}
+          renderItem={renderOrderCard}
+          keyExtractor={item => item.id}
+          contentContainerStyle={styles.flatListContainer}
         />
-      </Pressable>
-      <TabBar onTabStatePress={() => navigation.navigate("UserPage31")} />
-      <Image
-        style={styles.userPage31Child}
-        contentFit="cover"
-        source={require("../assets/line-4.png")}
-      />
-      <Text style={[styles.text, styles.textTypo]}>歷史訂單</Text>
-      <Pressable
-        style={[styles.pressable, styles.pressablePosition]}
-        onPress={() => navigation.navigate("HomePage5")}
-      >
-        <View style={styles.child} />
-        <Image
-          style={[styles.item, styles.itemLayout]}
-          contentFit="cover"
-          source={require("../assets/rectangle-211.png")}
-        />
-        <Text style={[styles.text1, styles.textTypo]}>
-          <Text style={styles.text2}>{`左營 仁濟宮 
-`}</Text>
-          <Text style={styles.text3}>
-            <Text style={styles.text4}>{`3 項捐贈品
-2024/04/25 · `}</Text>
-            <Text style={styles.text5}>待取貨</Text>
-          </Text>
-        </Text>
-          <Image
-            style={[styles.savedStateIcon, styles.itemLayout]}
-            contentFit="cover"
-            source={require("../assets/saved-state.png")}
-          />
-      </Pressable>
-      
-      <Component
-        rectangle21={require("../assets/rectangle-212.png")}
-        prop={`鳳邑 雷府大將廟 
-`}
-        prop1={`2 項捐贈品
-2024/04/20 · 已完成`}
-        savedStateIcon={false}
-        onPressablePress={() => navigation.navigate("HomePage5")}
-      />
-    </View>
+      </View>
+    </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  pressablePosition: {
-    left: 20,
-    position: "absolute",
-  },
-  textTypo: {
-    textAlign: "left",
-    fontFamily: FontFamily.interRegular,
-    position: "absolute",
-  },
-  itemLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    position: "absolute",
-    overflow: "hidden",
+  titleContainer: {
+    width: width * 0.95,
+    flexDirection:'row',
+    justifyContent: "center",
+    alignItems: 'center',
+    alignSelf: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 15,
   },
   icon: {
-    height: "100%",
-    width: "100%",
+    marginRight: 10,
   },
-  goBackButton: {
-    left: '5%',
-    top: '5%',
-    width: 40,
-    height: 40,
-    position: "absolute",
+  pageTitle: {
+    fontSize: 28,
+    color: "#4F4F4F",
+    fontWeight: "bold",
+    textAlign: 'left',
+    marginBottom: 5,
   },
-  userPage31Child: {
-    top: '20%',
-    left: 0,
-    width: '100%',
-    height: 1,
-    position: "absolute",
-  },
-  text: {
-    top: '7%',
-    left: '38%',
-    fontSize: FontSize.size_11xl,
-    display: "flex",
-    alignItems: "center",
-    width: 120,
-    height: 77,
-    color: Color.colorBlack,
-  },
-  child: {
-    height: "109.08%",
-    top: "0%",
-    right: "0%",
-    bottom: "-9.08%",
-    left: "0%",
-    backgroundColor: Color.colorWhite,
-    borderStyle: "solid",
-    borderColor: Color.colorDarkgray_100,
-    borderBottomWidth: 1,
-    borderRadius: Border.br_8xs,
-    position: "absolute",
-    width: "100%",
-  },
-  item: {
-    height: "86.33%",
-    width: "28.21%",
-    top: "6.92%",
-    right: "68.97%",
-    bottom: "6.75%",
-    left: "2.82%",
-    borderRadius: Border.br_8xs,
-  },
-  text2: {
-    fontSize: FontSize.size_8xl,
-    color: Color.colorBlack,
-  },
-  text4: {
-    color: Color.colorGray_400,
-  },
-  text5: {
-    color: "#bd0202",
-  },
-  text3: {
-    fontSize: FontSize.size_xl,
-  },
-  text1: {
-    height: "85.92%",
-    width: "60.03%",
-    top: "13.92%",
-    left: "35.13%",
-  },
-  savedStateIcon: {
-    height: "35%",
-    width: "8.97%",
-    top: "57.75%",
-    right: "3.85%",
-    bottom: "7.25%",
-    left: "87.18%",
-    display: "none",
-  },
-  pressable: {
-    top: 200,
-    width: 390,
-    height: 120,
-  },
-  userPage31: {
-    borderRadius: Border.br_21xl,
-    backgroundColor: Color.colorGray_100,
-    flex: 1,
-    height: 932,
-    overflow: "hidden",
-    width: "100%",
+  flatListContainer: {
+    paddingBottom: 20,
   },
 });
 

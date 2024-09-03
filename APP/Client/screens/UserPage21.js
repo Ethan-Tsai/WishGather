@@ -4,18 +4,20 @@ import axios from 'axios';
 import { StyleSheet, Pressable, Text, View ,ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
-import Component from "../components/Component1";
+
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 
-
+//記得include api
 const API = require('./DBconfig')
 
 const UserPage21 = () => {
   const navigation = useNavigation();
+
+  //宣告值接資料庫
   const [temples, setTemples] = useState([]);
 
-  useEffect(() => {
-    
+  //把資料庫中的值call出來
+  useEffect(() => {  
     axios.get(`${API}/temples`)
       .then(response => {
         setTemples(response.data);
@@ -45,17 +47,7 @@ const UserPage21 = () => {
       />
       <Text style={styles.text}>收藏清單</Text>
       
-      {/* 連接資料庫後，顯示收藏宮廟的component增加處 */}
-      {/* <Component
-        rectangle21={require("../assets/rectangle-213.png")}
-        prop={`大甲 鎮瀾宮媽祖廟
-`}
-        prop1="222公里"
-        savedStateIcon
-        propTop={200}
-        propLeft={20}
-        onPressablePress={() => navigation.navigate("OfferingPage5")}
-      /> */}
+ 
 <ScrollView>
   {temples.map((temple, index) => (
     <Component

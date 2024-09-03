@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import SetButton from '../components/Utility/SetButton';
 
 export default function Home({ navigation }) {
   return (
@@ -9,7 +10,6 @@ export default function Home({ navigation }) {
       colors={['#EA7500', '#FFFAF4']}
       style={styles.container}
     >
-
       {/* Logo 決定再放上去*/}
       <View style={styles.iconLayout}>
         <Image

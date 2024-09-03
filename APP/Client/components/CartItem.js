@@ -39,16 +39,22 @@ const styles = StyleSheet.create({
   container: {
     width: width * 0.9,
     height: 150,
-    backgroundColor: Color.colorGray_100,
+    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 10,
     borderWidth: 1,
-    borderColor: Color.colorWhitesmoke_300,
-    borderRadius: 10,
-    marginBottom: 10,
+    borderColor: '#ccc',
+    borderRadius: 15,
+    marginBottom: 15,
     alignSelf: 'center',
+    //shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // For Android
   },
   image: {
     width: 100,
@@ -65,27 +71,35 @@ const styles = StyleSheet.create({
   title: {
     height:40,
     fontSize: 23,
-    fontWeight: '500'
+    fontWeight: '500',
+    color:'#4F4F4F'
   },
   description: {
     height:20,
     fontSize: 14,
-    color: Color.colorGray_400,
+    color: 'gray',
     marginBottom: 5,
   },
   viewOrderButton: {
-    height: 45,
+    height: 40,
     width: '100%',
-    backgroundColor: Color.colorGoldenrod,
+    backgroundColor: 'orange',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: Border.br_3xs,
+    borderRadius: 15,
+
+    //shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // For Android
   },
   viewOrderText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 16,
+    fontWeight:'bold',
     textAlign: 'center',
-    fontFamily: FontFamily.interSemiBold,
   },
   deleteButtonContainer: {
     justifyContent: 'center',
