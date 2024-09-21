@@ -47,6 +47,7 @@ const WishGatherChatbot = () => {
   };
 
   return (
+<<<<<<< Updated upstream:APP/Client/screens/Chatbot.js
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>你好</Text>
@@ -65,6 +66,47 @@ const WishGatherChatbot = () => {
             <Text style={msg.type === 'user' ? styles.userMessage : styles.botMessage}>
               {msg.text}
             </Text>
+=======
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 35 : 0}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.content}>
+          <View style={styles.header}>
+            <Text style={styles.title}>你好</Text>
+            <Text style={styles.subtitle}>歡迎使用WishGather解籤功能</Text>
+          </View>
+
+          <ScrollView style={styles.messagesArea} contentContainerStyle={{ paddingBottom: 80 }}>
+            {messages.map((msg, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.messageBox,
+                  msg.type === 'user' ? styles.userMessageBox : styles.botMessageBox
+                ]}
+              >
+                <Text style={msg.type === 'user' ? styles.userMessage : styles.botMessage}>
+                  {msg.text}
+                </Text>
+              </View>
+            ))}
+          </ScrollView>
+
+          <View style={styles.typingArea}>
+            <TextInput
+              style={styles.input}
+              value={userMessage}
+              onChangeText={setUserMessage}
+              placeholder="請輸入抽到的籤詩與問題"
+              placeholderTextColor="#a9a9a9" // placeholder 顏色
+            />
+            <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+              <Text style={styles.sendButtonText}>Send</Text>
+            </TouchableOpacity>
+>>>>>>> Stashed changes:APP/Client/screens/Believer/Chatbot.js
           </View>
         ))}
       </ScrollView>
@@ -126,6 +168,18 @@ const styles = StyleSheet.create({
   typingArea: {
     flexDirection: 'row',
     alignItems: 'center',
+<<<<<<< Updated upstream:APP/Client/screens/Chatbot.js
+=======
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: '#fff',
+    position: 'absolute', // 固定位置
+    bottom: 0,  // 固定在底部
+    left: 0,
+    right: 0,
+    paddingHorizontal: 20, // 讓左右有些邊距
+>>>>>>> Stashed changes:APP/Client/screens/Believer/Chatbot.js
   },
   input: {
     flex: 1,
